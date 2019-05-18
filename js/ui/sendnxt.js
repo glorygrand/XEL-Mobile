@@ -59,7 +59,7 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 
 $scope.checkRecipient = function() {
 	$scope.recipient_address.text = $.trim($scope.recipient_address.text);
-	if (/^(NXT\-)?[A-Z0-9]+\-[A-Z0-9]+\-[A-Z0-9]+\-[A-Z0-9]+/i.test($scope.recipient_address.text)) {
+	if (/^(XEL\-)?[A-Z0-9]+\-[A-Z0-9]+\-[A-Z0-9]+\-[A-Z0-9]+/i.test($scope.recipient_address.text)) {
 		var address = new NxtAddress();
 		if (address.set($scope.recipient_address.text)) {
 			return true;
@@ -95,7 +95,7 @@ $rootScope.sendNxtCallBack = function(msg)
 
 $scope.sendNxtBtnClick = function()
 {
-	inputOptions = "Recipient: " + $scope.recipient_address.text + "<br>Amount: " + $scope.amtNxt.text + " Nxt<br>Fee: 1 Nxt";
+	inputOptions = "Recipient: " + $scope.recipient_address.text + "<br>Amount: " + $scope.amtNxt.text + " XEL<br>Fee: 0.1 XEL";
 	var inputAmt = parseFloat($scope.amtNxt.text);
 	var availableBal = parseFloat($scope.balance);
 
@@ -103,7 +103,7 @@ $scope.sendNxtBtnClick = function()
 	{
 		var alertPopup = $ionicPopup.alert({
 			title: 'Alert!',
-			template: 'Incorrect Recipient NXT Address'
+			template: 'Incorrect Recipient XEL Address'
 		});
 		alertPopup.then(function(res) {
 		});
@@ -113,7 +113,7 @@ $scope.sendNxtBtnClick = function()
 	if(!isNaN($scope.amtNxt.text) && inputAmt < availableBal)
 	{
 		var confirmPopup = $ionicPopup.confirm({
-			title: 'Confirm Send NXT',
+			title: 'Confirm Send XEL',
 			template: inputOptions
 		});
 		confirmPopup.then(function(res) {
@@ -130,7 +130,7 @@ $scope.sendNxtBtnClick = function()
 		{
 			var alertPopup = $ionicPopup.alert({
 				title: 'Alert!',
-				template: 'Incorrect Nxt Amount'
+				template: 'Incorrect XEL Amount'
 			});
 			alertPopup.then(function(res) {
 			});

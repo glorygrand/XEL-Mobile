@@ -1,6 +1,7 @@
 // The MIT License (MIT)
 
 // Copyright (c) 2015-2016 SkyNxt.
+// Copyright (c) 2019 XEL Community.
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +33,8 @@ SkyNxt.index.config(function($stateProvider, $urlRouterProvider) {
 	$scope.globalAddress = SkyNxt.globalAddress;
 	  $scope.items = [
     { id: "sendNxt", option: '		Send', detail: 'Send amount to XEL Address', icon: 'ion-card' },
-//	{ id: "portfolio", option: '		Trade', detail: 'View porfolio. Buy\\Sell in XEL Asset Exchange', icon: 'ion-arrow-graph-up-right' }, 
-	{ id: "pollList", option: '		Vote', detail: 'View poll list and Vote', icon: 'ion-speakerphone' },
+//	{ id: "portfolio", option: '		Trade', detail: 'View porfolio. Buy\\Sell in XEL Asset Exchange', icon: 'ion-arrow-graph-up-right' },
+//	{ id: "pollList", option: '		Vote', detail: 'View poll list and Vote', icon: 'ion-speakerphone' },
 	{ id: "messages", option: '		Message', detail: 'Read, Compose, Send messages', icon: 'ion-chatboxes' },
 	{ id: "transactions", option: '		Transactions', detail: 'View transactions of your account' , icon: 'ion-arrow-swap'},
 	{ id: "blockchainservice", option: '		Blockchain service', detail: 'Services on blockchain' , icon: 'ion-cube'}

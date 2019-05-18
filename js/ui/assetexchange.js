@@ -92,22 +92,22 @@ $stateProvider
 })
 })
 .controller('portfolioListCtrl', function($scope, $ionicLoading, $http, $state, $ionicPopup, $ionicModal) {
-if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){	
-	var assetsdb = 'undefined';	
+if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
+	var assetsdb = 'undefined';
 	$scope.groups = [];
 	$scope.portfolioSearch = { text : '' };
-	
+
 	$scope.clearPortfolioSearch = function()
 	{
 		$scope.portfolioSearch.text = "";
 		$scope.filterPortfolio();
 	}
-	
+
 	$scope.filterPortfolio = function(e){
 		var regexVal = {'$regex': new RegExp($scope.portfolioSearch.text,"i")}
 		$scope.groups = assetsdb.find({'$or':[{name: regexVal}, {description: regexVal}]});
-	}	
-	
+	}
+
 	$scope.toggleGroup = function(group) {
 		if ($scope.isGroupShown(group)) {
 		  $scope.shownGroup = null;
@@ -115,17 +115,17 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 		  $scope.shownGroup = group;
 		}
 	};
-	
+
 	$scope.isGroupShown = function(group) {
 		return $scope.shownGroup === group;
 	};
 
 	$ionicLoading.show({duration: 30000, noBackdrop: true, template: '<ion-spinner icon="spiral"></ion-spinner>'});
-	
+
 	$http.get(SkyNxt.ADDRESS + '/nxt?requestType=getAccountAssets&account=' + SkyNxt.globalAddress + "&includeAssetInfo=true")
     .success(function(response) {
 		SkyNxt.database.removeCollection('assets');
-		assetsdb = SkyNxt.database.addCollection('assets');			
+		assetsdb = SkyNxt.database.addCollection('assets');
 		$ionicLoading.hide();
 		$scope.groups = [];
 		for (var i=0; i < response.accountAssets.length; i++) {
@@ -140,7 +140,7 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 	$scope.assetID = {
 		text : ""
 	}
-	
+
 	$scope.addToPortfolio = function()
 	{
 		if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
@@ -149,7 +149,7 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 				noBackdrop: true,
 				template: '<ion-spinner icon="spiral"></ion-spinner>'
 			});
-			
+
 			$http.get(SkyNxt.ADDRESS + '/nxt?requestType=getAsset&asset=' + $scope.assetID.text)
 			.success(function(response) {
 				$ionicLoading.hide();
@@ -166,12 +166,12 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 		}
 	}
 
-	$scope.addAssetID = function(){		
+	$scope.addAssetID = function(){
 		var popUpBody = "<label class='item item-input item-floating-label'><span class='input-label'>Asset ID</span><input type='text' ng-model='assetID.text' placeholder='Enter Asset ID'></label>";
-		
+
 		var addAssetPopUp = $ionicPopup.show({
 			 template: popUpBody,
-			 title: 'Enter Asset ID',			 
+			 title: 'Enter Asset ID',
 			 scope: $scope,
 			 buttons: [
 			   { text: 'Cancel' },
@@ -179,17 +179,17 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 				 text: '<b>Add</b>',
 				 type: 'button-positive',
 				 onTap: function(e) {
-				   if (!$scope.assetID.text) {					 
+				   if (!$scope.assetID.text) {
 					 e.preventDefault();
-				   } else {					 
-					 $scope.addToPortfolio();					 
+				   } else {
+					 $scope.addToPortfolio();
 				   }
 				 }
 			   },
 			 ]
 		   });
 	}
-	
+
 	$scope.assetTabs = function(asset){
 		SkyNxt.currentAsset = asset;
 		$state.go('assetmenu.buy')
@@ -222,7 +222,7 @@ $rootScope.orderPlacementCallBack = function(msg)
 	}
 }
 
-$scope.$on('$ionicView.enter', function(){ 
+$scope.$on('$ionicView.enter', function(){
 if(SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS )
 {
 	$scope.askorders = [];
@@ -262,7 +262,7 @@ if(SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS )
 	.error(function(response) {
 	});
 	}
-	
+
 	$scope.setaskOrder = function(askorder)
 	{
 		$scope.buyprice.text = $filter('formatPrice')(askorder.priceNQT, SkyNxt.currentAsset.decimals);
@@ -271,7 +271,7 @@ if(SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS )
 	$scope.formatTotal = "";
 	$scope.formatTotalFunc = function(){
 		var quantityQNT = new BigInteger(NRS.convertToQNT(String($scope.buyquantity.text), SkyNxt.currentAsset.decimals));
-		var priceNQT = new BigInteger(NRS.calculatePricePerWholeQNT(NRS.convertToNQT(String($scope.buyprice.text)), SkyNxt.currentAsset.decimals));		
+		var priceNQT = new BigInteger(NRS.calculatePricePerWholeQNT(NRS.convertToNQT(String($scope.buyprice.text)), SkyNxt.currentAsset.decimals));
 		var total = quantityQNT.multiply(priceNQT);
 		$scope.formatTotal = NRS.convertToNXT(total.toString());
 	}
@@ -279,12 +279,12 @@ if(SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS )
 	{
 		if($scope.buyprice.text != "" && $scope.buyquantity.text != "" && !isNaN($scope.buyprice.text) && !isNaN($scope.buyquantity.text))
 		{
-			inputOptions = "Asset: " + SkyNxt.currentAsset.name + "<br>Asset ID: " + SkyNxt.currentAsset.asset + "<br>Buy Price: " + $scope.buyprice.text + " NXT<br>Buy Quantity: " + $scope.buyquantity.text  + " " + SkyNxt.currentAsset.name +"<br>Total " + $scope.formatTotal + " NXT<br>Fee: 1 Nxt";
+			inputOptions = "Asset: " + SkyNxt.currentAsset.name + "<br>Asset ID: " + SkyNxt.currentAsset.asset + "<br>Buy Price: " + $scope.buyprice.text + " NXT<br>Buy Quantity: " + $scope.buyquantity.text  + " " + SkyNxt.currentAsset.name +"<br>Total " + $scope.formatTotal + " XEL<br>Fee: 0.1 XEL";
 
 			var confirmPopup = $ionicPopup.confirm({
 				title: 'Confirm Buy order',
 				template: inputOptions
-			});	
+			});
 			confirmPopup.then(function(res) {
 				if(res) {
 					var assetId = new BigInteger(String(SkyNxt.currentAsset.asset));
@@ -294,7 +294,7 @@ if(SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS )
 					$ionicLoading.show({duration: 30000, noBackdrop: true, template: '<ion-spinner icon="spiral"></ion-spinner>'});
 					SkyNxt.placeAssetOrder_BuildHex("buy", assetId.toString(), quantityQNT.toString(), priceNQT.toString(), order.toString(), $rootScope.orderPlacementCallBack);
 				}
-			});			
+			});
 		}
 		else
 		{
@@ -331,7 +331,7 @@ $rootScope.orderPlacementCallBack = function(msg)
 	}
 }
 
-$scope.$on('$ionicView.enter', function(){ 
+$scope.$on('$ionicView.enter', function(){
 if( SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS ){
 	$scope.bidorders = [];
 	$scope.currentAsset = SkyNxt.currentAsset;
@@ -362,19 +362,19 @@ if( SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS ){
 	$http.get(SkyNxt.ADDRESS +'/nxt?requestType='+ orderType +'&asset=' + $scope.currentAsset.asset)
     .success(function(response) {
 		SkyNxt.database.removeCollection('bidOrders');
-		bidordersdb = SkyNxt.database.addCollection('bidOrders');			
+		bidordersdb = SkyNxt.database.addCollection('bidOrders');
 		$ionicLoading.hide();
 		$scope.bidorders = [];
-		for (var i=0; i < response.bidOrders.length; i++) {			
+		for (var i=0; i < response.bidOrders.length; i++) {
 			response.bidOrders[i]["priceINT"] = parseInt(response.bidOrders[i].priceNQT);
 			bidordersdb.insert(response.bidOrders[i]);
 		}
-		$scope.bidorders = bidordersdb.chain().simplesort("priceINT").data();	
+		$scope.bidorders = bidordersdb.chain().simplesort("priceINT").data();
 	})
 	.error(function(response) {
 	});
 	}
-	
+
 	$scope.setbidOrder = function(bidorder)
 	{
 		$scope.sellprice.text = $filter('formatPrice')( bidorder.priceNQT, SkyNxt.currentAsset.decimals);
@@ -384,7 +384,7 @@ if( SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS ){
 	$scope.formatTotal = "";
 	$scope.formatTotalFunc = function(){
 		var quantityQNT = new BigInteger(NRS.convertToQNT(String($scope.sellquantity.text), SkyNxt.currentAsset.decimals));
-		var priceNQT = new BigInteger(NRS.calculatePricePerWholeQNT(NRS.convertToNQT(String($scope.sellprice.text)), SkyNxt.currentAsset.decimals));		
+		var priceNQT = new BigInteger(NRS.calculatePricePerWholeQNT(NRS.convertToNQT(String($scope.sellprice.text)), SkyNxt.currentAsset.decimals));
 		var total = quantityQNT.multiply(priceNQT);
 		$scope.formatTotal = NRS.convertToNXT(total.toString());
 	}
@@ -393,12 +393,12 @@ if( SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS ){
 	{
 		if($scope.sellprice.text != "" && $scope.sellquantity.text != "" && !isNaN($scope.sellprice.text) && !isNaN($scope.sellquantity.text))
 		{
-			inputOptions = "Asset: " + SkyNxt.currentAsset.name + "<br>Asset ID: " + SkyNxt.currentAsset.asset + "<br>Sell Price: " + $scope.sellprice.text + " NXT<br>Sell Quantity: " + $scope.sellquantity.text + " " + SkyNxt.currentAsset.name + "<br>Total " + $scope.formatTotal + " NXT<br>Fee: 1 Nxt";
+			inputOptions = "Asset: " + SkyNxt.currentAsset.name + "<br>Asset ID: " + SkyNxt.currentAsset.asset + "<br>Sell Price: " + $scope.sellprice.text + " NXT<br>Sell Quantity: " + $scope.sellquantity.text + " " + SkyNxt.currentAsset.name + "<br>Total " + $scope.formatTotal + " XEL<br>Fee: 0.1 XEL";
 
 			var confirmPopup = $ionicPopup.confirm({
 				title: 'Confirm Sell order',
 				template: inputOptions
-			});	
+			});
 			confirmPopup.then(function(res) {
 				if(res) {
 					var assetId = new BigInteger(String(SkyNxt.currentAsset.asset));
@@ -408,7 +408,7 @@ if( SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS ){
 					$ionicLoading.show({duration: 30000, noBackdrop: true, template: '<ion-spinner icon="spiral"></ion-spinner>'});
 					SkyNxt.placeAssetOrder_BuildHex("sell", assetId.toString(), quantityQNT.toString(), priceNQT.toString(), order.toString(), $rootScope.orderPlacementCallBack);
 				}
-			});			
+			});
 		}
 		else
 		{
@@ -421,23 +421,23 @@ if( SkyNxt.currentAsset.decimals <= SkyNxt.MAX_DECIMALS ){
 })
 })
 .controller('ordersTabCtrl', function($rootScope, $scope, $ionicLoading, $http, $ionicPopup, $filter) {
-$scope.$on('$ionicView.enter', function(){ 
+$scope.$on('$ionicView.enter', function(){
 	var openbidordersdb;
 	var openaskordersdb;
 	$scope.openaskorders = [];
 	$scope.openbidorders = [];
 	$scope.currentAsset = SkyNxt.currentAsset;
-	
+
 	var orderType = 'undefined';
 	$scope.openOrderTxt = "Open Sell orders";
 	$scope.openOrderStatus = "true";
-	
+
 	$scope.orderstatus = function(){
 		return $scope.openOrderStatus;
 	}
 	$scope.toggleOpenOrders = function()
 	{
-		$scope.openOrderStatus = !$scope.openOrderStatus;		
+		$scope.openOrderStatus = !$scope.openOrderStatus;
 		if($scope.openOrderStatus)
 		{
 			$scope.openOrderTxt = "Open Sell orders";
@@ -449,47 +449,47 @@ $scope.$on('$ionicView.enter', function(){
 			$scope.openBidOrders()
 		}
 	}
-	
+
 	$scope.openAskOrders = function(){
 	$scope.currentAsset = SkyNxt.currentAsset;
 	orderType = 'getAccountCurrentAskOrders';
 	$scope.openaskorders = [];
 	SkyNxt.database.removeCollection('openordersask');
-	openaskordersdb = SkyNxt.database.addCollection('openordersask');	
-	
+	openaskordersdb = SkyNxt.database.addCollection('openordersask');
+
 	$ionicLoading.show({ duration: 30000, noBackdrop: true, template: '<ion-spinner icon="spiral"></ion-spinner>' });
 
 	$http.get(SkyNxt.ADDRESS +'/nxt?requestType='+ orderType +'&account=' + SkyNxt.globalAddress + '&asset=' + $scope.currentAsset.asset)
     .success(function(response) {
 		$ionicLoading.hide();
-		
-		for (var i=0; i < response.askOrders.length; i++) {			
+
+		for (var i=0; i < response.askOrders.length; i++) {
 			openaskordersdb.insert(response.askOrders[i]);
 		}
-		
-		$scope.openaskorders = openaskordersdb.chain().simplesort("height").data();	
+
+		$scope.openaskorders = openaskordersdb.chain().simplesort("height").data();
 	})
 	.error(function(response) {
 	});
 	}
-	
+
 	$scope.openBidOrders = function(type){
 	$scope.currentAsset = SkyNxt.currentAsset;
-	orderType = 'getAccountCurrentBidOrders';		
+	orderType = 'getAccountCurrentBidOrders';
 	$scope.openbidorders = [];
 	SkyNxt.database.removeCollection('openordersbid');
 	openbidordersdb = SkyNxt.database.addCollection('openordersbid');
-	
+
 	$ionicLoading.show({ duration: 30000, noBackdrop: true, template: '<ion-spinner icon="spiral"></ion-spinner>' });
 
 	$http.get(SkyNxt.ADDRESS +'/nxt?requestType='+ orderType +'&account=' + SkyNxt.globalAddress + '&asset=' + $scope.currentAsset.asset)
     .success(function(response) {
 		$ionicLoading.hide();
-		
+
 		for (var i=0; i < response.bidOrders.length; i++) {
 			openbidordersdb.insert(response.bidOrders[i]);
 		}
-		
+
 		$scope.openbidorders = openbidordersdb.chain().simplesort("height").data();
 	})
 	.error(function(response) {
@@ -545,13 +545,13 @@ $scope.$on('$ionicView.enter', function(){
 			}
 			if($scope.order != null)
 			{
-				var confirmorderdetails = "<br>Asset: " + SkyNxt.currentAsset.name + "<br> Price: " + $filter('formatPrice')($scope.order.priceNQT, SkyNxt.currentAsset.decimals) + " NXT<br>Quantity: " + $filter('formatQuantity')($scope.order.quantityQNT, SkyNxt.currentAsset.decimals) + "<br> Order: " + $scope.order.order + "<br>Fee: 1 NXT";
+				var confirmorderdetails = "<br>Asset: " + SkyNxt.currentAsset.name + "<br> Price: " + $filter('formatPrice')($scope.order.priceNQT, SkyNxt.currentAsset.decimals) + " NXT<br>Quantity: " + $filter('formatQuantity')($scope.order.quantityQNT, SkyNxt.currentAsset.decimals) + "<br> Order: " + $scope.order.order + "<br>Fee: 0.1 XEL";
 				var confirmPopup = $ionicPopup.confirm({
 					title: 'Cancel ' + type + ' Order',
 					template: confirmorderdetails//'Do you want to cancel this ' + type + ' Order?' + confirmorderdetails
-				});	
+				});
 				confirmPopup.then(function(res) {
-					if(res) {						
+					if(res) {
 						var assetId = new BigInteger(String(SkyNxt.currentAsset.asset));
 						var quantityQNT = new BigInteger($scope.order.quantityQNT);
 						var priceNQT = new BigInteger($scope.order.priceNQT);
@@ -569,12 +569,12 @@ $scope.$on('$ionicView.enter', function(){
 				});
 			}
 	}
-	
-	$scope.openAskOrders();	
+
+	$scope.openAskOrders();
 })
 })
 .controller('chartTabCtrl', function($rootScope, $scope, $ionicLoading, $http, $filter) {
-$scope.$on('$ionicView.enter', function(){ 
+$scope.$on('$ionicView.enter', function(){
 	$scope.currentAsset = SkyNxt.currentAsset;
 	$scope.drawGraph = function(){
 	$scope.currentAsset = SkyNxt.currentAsset;
@@ -590,23 +590,23 @@ $scope.$on('$ionicView.enter', function(){
 	    $ionicLoading.hide();
 		SkyNxt.database.removeCollection('graphdb');
 		graphDataDB = SkyNxt.database.addCollection('graphdb');
-		for (var i=0; i < response.trades.length; i++) {			
+		for (var i=0; i < response.trades.length; i++) {
 			graphDataDB.insert(response.trades[i]);
-		}		
+		}
 		var sortedList = graphDataDB.chain().simplesort("timestamp").data();
 		graphDataLabel = [];
 		var graphDataPrice = [];
 		for(var i = 0; i < sortedList.length; i++)
 		{
-			graphDataLabel.push(parseInt(sortedList[i].timestamp));				
-			graphDataPrice.push(parseFloat($filter('formatPrice')(sortedList[i].priceNQT, SkyNxt.currentAsset.decimals)));			
+			graphDataLabel.push(parseInt(sortedList[i].timestamp));
+			graphDataPrice.push(parseFloat($filter('formatPrice')(sortedList[i].priceNQT, SkyNxt.currentAsset.decimals)));
 		}
 
 		var px = 14;
 		var numChars = 6;
 		var width = Math.floor($(window).width() / (px * numChars));
 		width = Math.floor(graphDataLabel.length / width);
-		
+
 		chartData = {
 			labels: graphDataLabel,
 			series: [graphDataPrice]
@@ -618,9 +618,9 @@ $scope.$on('$ionicView.enter', function(){
 		{
 			$("#assetchart" ).removeClass( "ct-square" ).addClass( "ct-major-tenth" );
 		}
-		else		
+		else
 			$("#assetchart" ).removeClass( "ct-major-tenth" ).addClass( "ct-square" );
-		
+
 		var i = -1;
 		chartOptions = {
 		showArea: true,
@@ -649,8 +649,8 @@ $scope.convertToDate = function(value)
 	return str;
 }
 
-		var chartDrawn = new Chartist.Line("#assetchart",chartData, chartOptions);		
-	}		
+		var chartDrawn = new Chartist.Line("#assetchart",chartData, chartOptions);
+	}
 	})
 	.error(function(response) {
 	});
@@ -659,39 +659,39 @@ $scope.convertToDate = function(value)
 })
 })
 .controller('tradeHistoryTabCtrl', function($rootScope, $scope, $ionicLoading, $http, $filter) {
-$scope.$on('$ionicView.enter', function(){ 
+$scope.$on('$ionicView.enter', function(){
 	$scope.currentAsset = SkyNxt.currentAsset;
-	$scope.tradeHistory = [];		
-	
+	$scope.tradeHistory = [];
+
 	$ionicLoading.show({
 		duration: 30000,
 		noBackdrop: true,
 		template: '<ion-spinner icon="spiral"></ion-spinner>'
 	});
-	
+
 	$http.get(SkyNxt.ADDRESS +'/nxt?requestType=getTrades&asset=' + SkyNxt.currentAsset.asset)
    .success(function(response) {
 	    $ionicLoading.hide();
 		SkyNxt.database.removeCollection('tradehistorydb');
 		tradeHistoryDB = SkyNxt.database.addCollection('tradehistorydb');
-		for (var i=0; i < response.trades.length; i++) {			
+		for (var i=0; i < response.trades.length; i++) {
 			tradeHistoryDB.insert(response.trades[i]);
-		}		
-		$scope.tradeHistory = tradeHistoryDB.chain().simplesort("timestamp").data();	
+		}
+		$scope.tradeHistory = tradeHistoryDB.chain().simplesort("timestamp").data();
 	})
 	.error(function(response) {
 	});
 })
 })
 .controller('assetInfoTabCtrl', function($rootScope, $scope, $ionicLoading, $http, $filter) {
-$scope.$on('$ionicView.enter', function(){ 
+$scope.$on('$ionicView.enter', function(){
 	$scope.currentAsset = SkyNxt.currentAsset;
 	$ionicLoading.show({
 		duration: 30000,
 		noBackdrop: true,
 		template: '<ion-spinner icon="spiral"></ion-spinner>'
 	});
-	
+
 	$http.get(SkyNxt.ADDRESS + '/nxt?requestType=getAsset&asset=' + $scope.currentAsset.asset)
     .success(function(response) {
 		$ionicLoading.hide();
