@@ -4,7 +4,7 @@
 
 ### Can contain unknown bugs please wait for stable release . V1.0.3
 
-# XEL Mobile Wallet
+# XEL Mobile Wallet Dapp
 Light weight Mobile application based on Javascript that connects to XEL blockchain. For more info on XEL blockchain visit http://xel.org
 
 ### This application supports following operations.
