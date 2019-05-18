@@ -186,7 +186,7 @@ function discoverPeers(ip)
 
 function trustedPeers(ip)
 {
-	var url = '/nxt?requestType=getBalance&account=NXT-K5KL-23DJ-3XLK-22222';
+	var url = '/nxt?requestType=getBalance&account=XEL-MAYC-ZZ3Y-YX56-6NH52';
 	 if(ip.indexOf(":") != -1)
 		url = ip + ':' + SkyNxt.PORT + url; //trustedPeers should be called only after paraphrase is entered
 	else
