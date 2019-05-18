@@ -36,4 +36,5 @@ https://github.com/tieandsuit/XEL-Mobile/releases
 
 https://tieandsuit.github.io/XEL-Mobile/
 
-<img src=https://build.phonegap.com/apps/3576941/badge/643380414/version.svg />
+<img src=https://build.phonegap.com/apps/3576941/badge/643380414/version.svg /> <img src=https://build.phonegap.com/apps/3576941/badge/643380414/android.svg /> <img src=https://build.phonegap.com/apps/3576941/badge/643380414/winphone.svg />
+
