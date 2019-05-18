@@ -1,4 +1,4 @@
-### can contain unknown bugs please wait for stable release
+### Can contain unknown bugs please wait for stable release . V0.1.0
 
 # XEL Mobile Wallet
 Light weight Mobile application based on Javascript that connects to XEL blockchain. For more info on XEL blockchain visit http://xel.org
