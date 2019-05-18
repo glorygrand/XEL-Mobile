@@ -37,19 +37,19 @@ SkyNxt.index.config(function($stateProvider, $urlRouterProvider) {
 			text: ''
 	}
 	$scope.balance_spinner = true;
-	
+
 $scope.keydownevent = function(e){
 	SkyNxt.keydownevent(e, $scope.amtNxt.text, 8);
 }
-	
+
 $scope.accountBalance = function(){
 if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 	$scope.balance = "";
 	$scope.balance_spinner = true;
-	$http.get(SkyNxt.ADDRESS + '/nxt?requestType=getBalance&account=' + SkyNxt.globalAddress)	
-	.success(function(response) {			
+	$http.get(SkyNxt.ADDRESS + '/nxt?requestType=getBalance&account=' + SkyNxt.globalAddress)
+	.success(function(response) {
 		$scope.balance_spinner = false;
-		$scope.balance = NRS.convertToNXT(response.unconfirmedBalanceNQT);			
+		$scope.balance = NRS.convertToNXT(response.unconfirmedBalanceNQT);
 	})
 	.error(function(response) {
 		$scope.balance_spinner = false;
@@ -78,7 +78,7 @@ $rootScope.sendNxtCallBack = function(msg)
 	}
 
 	var resultPopup = $ionicPopup.show({
-	title: 'Send Nxt',
+	title: 'Send XEL',
 	subTitle: 'Result: Payment ' + msg,
 	scope: $scope,
 	buttons: [
@@ -109,13 +109,13 @@ $scope.sendNxtBtnClick = function()
 		});
 		return;
 	}
-	
+
 	if(!isNaN($scope.amtNxt.text) && inputAmt < availableBal)
 	{
 		var confirmPopup = $ionicPopup.confirm({
 			title: 'Confirm Send NXT',
 			template: inputOptions
-		});	
+		});
 		confirmPopup.then(function(res) {
 			if(res) {
 				var send_amount_NQT = NRS.convertToNQT($scope.amtNxt.text);
@@ -133,7 +133,7 @@ $scope.sendNxtBtnClick = function()
 				template: 'Incorrect Nxt Amount'
 			});
 			alertPopup.then(function(res) {
-			});					
+			});
 		}
 		if(!isNaN($scope.amtNxt.text) && inputAmt > availableBal)
 		{
@@ -142,7 +142,7 @@ $scope.sendNxtBtnClick = function()
 				template: 'Insufficient balance'
 			});
 			alertPopup.then(function(res) {
-			});				
+			});
 		}
 	}
 }
@@ -156,14 +156,14 @@ $scope.scanBarCode = function()
 		  {
 			  $scope.recipient_address.text = String(result.text);
 		  }
-	  }, 
+	  },
 	  function (error) {
 	  }
    );
    } catch (e) {
-			
+
 		}
 }
-	
+
 $scope.accountBalance();
 });

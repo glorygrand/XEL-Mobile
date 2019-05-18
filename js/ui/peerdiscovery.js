@@ -21,8 +21,8 @@
 // THE SOFTWARE.
 
 var SkyNxt = (function(SkyNxt, $, undefined) {
-//var peers = ['108.61.7.242', 'wallet-03.xel-project.org', 'wallet-04.xel-project.org', 'wallet-05.xel-project.org'];
-var peers = ['108.61.7.242', 'wallet-03.xel-project.org', 'wallet-04.xel-project.org', 'wallet-05.xel-project.org' ];
+//var peers = ['http://node-01.xel.org', 'http://node-02.xel.org', 'http://node-03.xel.org', 'http://node-04.xel.org'];
+var peers = ['http://node-01.xel.org', 'http://node-02.xel.org', 'http://node-03.xel.org', 'http://node-04.xel.org' ];
 
 
 
