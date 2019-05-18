@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="res/android/Xel.png" width="35" title="hover text">
+</p>
+
 ### Can contain unknown bugs please wait for stable release . V0.1.0
 
 # XEL Mobile Wallet
