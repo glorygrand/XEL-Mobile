@@ -1,3 +1,5 @@
+### can contain unknown bugs please wait for stable release
+
 # XEL Mobile Wallet
 Light weight Mobile application based on Javascript that connects to XEL blockchain. For more info on XEL blockchain visit http://xel.org
 
@@ -25,8 +27,6 @@ Light weight Mobile application based on Javascript that connects to XEL blockch
 </p>
 
 ### Signing is done client side before broadcasting transactions.
-
-## Download
 
 
 
