@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget xmlns = "http://www.w3.org/ns/widgets" xmlns:gap = "http://phonegap.com/ns/1.0" id = "com.phonegap.skynxt" versionCode = "10" version = "1.0.0" >
+    <name>XEL</name>
+    <description>
+        Blockchain DApp.
+    </description>
+    <author email="ibux@protonmail.com" href="http://xel.org">
+        XEL Community
+    </author>
+
+	<plugin name="cordova-plugin-file" source="npm" />
+	<plugin name="cordova-plugin-splashscreen" source="npm" />
+	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
+	<plugin name="cordova-plugin-whitelist" />
+
+	<preference name="SplashScreen" value="res/screen/android/Xel.png" />
+	<preference name="AutoHideSplashScreen" value="true" />
+	<preference name="SplashScreenDelay" value="3000" />
+	<preference name="SplashMaintainAspectRatio" value="true" />
+
+	<access origin="*" />
+	<platform name="android">
+		<preference name="AndroidPersistentFileLocation" value="Compatibility" />
+		<icon src="res/android/Xel.png" qualifier="ldpi" />
+		<icon src="res/android/Xel.png" qualifier="mdpi" />
+		<icon src="res/android/Xel.png" qualifier="hdpi" />
+		<icon src="res/android/Xel.png" qualifier="xhdpi" />
+		<splash src="res/screen/android/Xel.png" qualifier="ldpi" />
+		<splash src="res/screen/android/Xel.png" qualifier="mdpi" />
+		<splash src="res/screen/android/Xel.png" qualifier="hdpi" />
+		<splash src="res/screen/android/Xel.png" qualifier="xhdpi" />
+	</platform>
+
+	<platform name="winphone">
+		<icon src="res/wp/Xel.ico" />
+		<splash src="res/wp/Xel.png" />
+	</platform>
+
+	<platform name="ios">
+		<icon src="res/ios/Xel.png" width="180" height="180" />
+		<splash src="res/wp/Xel.png" width="320" height="480" />
+	</platform>
+</widget>
