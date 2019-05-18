@@ -22,7 +22,7 @@
 
 var SkyNxt = (function(SkyNxt, $, undefined) {
 //var peers = ['http://node-01.xel.org', 'http://node-02.xel.org', 'http://node-03.xel.org', 'http://node-04.xel.org'];
-var peers = ['http://node-01.xel.org', 'http://node-02.xel.org', 'http://node-03.xel.org', 'http://node-04.xel.org' ];
+var peers = ['http://node-04.xel.org' ];
 
 
 
