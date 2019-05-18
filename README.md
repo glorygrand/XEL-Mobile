@@ -2,7 +2,7 @@
   <img src="res/android/Xel.png" width="35" title="hover text">
 </p>
 
-### Can contain unknown bugs please wait for stable release . V1.0.3
+### Can contain unknown bugs ,I recomend to wait for stable release . V1.0.3
 
 # XEL Mobile Wallet Dapp
 Light weight Mobile application based on Javascript that connects to XEL blockchain. For more info on XEL blockchain visit http://xel.org
