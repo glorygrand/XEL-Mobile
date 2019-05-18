@@ -28,7 +28,9 @@ Light weight Mobile application based on Javascript that connects to XEL blockch
 
 ### Signing is done client side before broadcasting transactions.
 
+## Download 
 
+https://github.com/tieandsuit/XEL-Mobile/releases
 
 ## Run in Browser
 
