@@ -33,7 +33,7 @@ $stateProvider
 .controller('transactionsListCtrl', function($scope, $ionicLoading, $http, $state, $timeout, $filter) {
 $scope.showTransactions = function(){
 if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
-	var transactionsdb = 'undefined';	
+	var transactionsdb = 'undefined';
 	$scope.groups = [];
 	$scope.toggleGroup = function(group) {
 		if ($scope.isGroupShown(group)) {
@@ -42,24 +42,24 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 		  $scope.shownGroup = group;
 		}
 	};
-	
+
 	$scope.isGroupShown = function(group) {
 		return $scope.shownGroup === group;
-	};  	
-		
+	};
+
 	$scope.transactionSearch = {text : ''};
-	
+
 	$scope.clearTransactionSearch = function()
 	{
 		$scope.transactionSearch.text = "";
 		$scope.filterTransactions();
 	}
-	
+
 	$scope.filterTransactions = function(e){
 		var regexVal = {'$regex': new RegExp($scope.transactionSearch.text,"i")}
 		$scope.groups = transactionsdb.find({'$or':[{type: regexVal}, {dateTime: regexVal}, {from: regexVal}]});
 	}
-	
+
 	$scope.getType = function(type, subtype) {
 		if(type == SkyNxt.TRANSACTION_TYPE)
 				return { transtype : SkyNxt.PAYMENT, icon : "ion-card" };
@@ -85,7 +85,7 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 		var retVal = $scope.isGroupShown(group);
 		return ((group.type.indexOf("-") != -1) ? true : false) && retVal
 	}
-	
+
 	$scope.isAssetShown = function(group)
 	{
 		return group.asset && $scope.isGroupShown(group);
@@ -96,20 +96,20 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 		noBackdrop: true,
 		template: '<ion-spinner icon="spiral"></ion-spinner>'
 	});
-	
+
 	$http.get(SkyNxt.ADDRESS + '/nxt?requestType=getBlockchainTransactions&account=' + SkyNxt.globalAddress)
     .success(function(response) {
 		SkyNxt.database.removeCollection('transactions');
-		transactionsdb = SkyNxt.database.addCollection('transactions');			
+		transactionsdb = SkyNxt.database.addCollection('transactions');
 		$ionicLoading.hide();
 		$scope.groups = [];
 		for (var i=0; i < response.transactions.length; i++) {
 			var trans = response.transactions[i];
-			
+
 			var fromAdd = "";
 			var toAddr = "";
 			var transType = $scope.getType(trans.type, trans.subtype)
-			
+
 			if(transType.transtype == SkyNxt.PAYMENT || transType.transtype == SkyNxt.MESSAGE)
 			{
 				var nxtAddress;
@@ -122,7 +122,7 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 				if(nxtAddress == SkyNxt.globalAddress)
 				{
 					if(transType.transtype == SkyNxt.PAYMENT)
-						transType.transtype = "-" + NRS.convertToNXT(trans.amountNQT) + " NXT";
+						transType.transtype = "-" + NRS.convertToNXT(trans.amountNQT) + " XEL";
 					transType.icon += " assertive";
 					fromAdd = address.toString();
 					toAddr = addressRecipient.toString();
@@ -130,13 +130,13 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 				else
 				{
 					if(transType.transtype == SkyNxt.PAYMENT)
-						transType.transtype = "+" + NRS.convertToNXT(trans.amountNQT) + " NXT";
+						transType.transtype = "+" + NRS.convertToNXT(trans.amountNQT) + " XEL";
 					transType.icon += " balanced";
 					fromAdd = address.toString();
 					toAddr = addressRecipient.toString();
 				}
 			}
-			
+
 			var confirmationsBlocks = '1440+';
 			var confirmationsDispColor = "balanced";
 			if(trans.confirmations < 1440)
@@ -144,7 +144,7 @@ if(SkyNxt.ADDRESS != "" && SkyNxt.ADDRESS != undefined ){
 				confirmationsBlocks = trans.confirmations;
 				confirmationsDispColor = "assertive";
 			}
-			
+
 			transactionsdb.insert({type : transType.transtype, icon : transType.icon, amount : trans.amountNQT, time: trans.timestamp, from : fromAdd, to : toAddr, asset: trans.attachment.asset, confirmations : confirmationsBlocks, confirmDispColor : confirmationsDispColor, fee : trans.feeNQT, dateTime : $filter('formatTimestamp')(trans.timestamp)})
 			;
 			$scope.groups = transactionsdb.chain().simplesort("time").data();
