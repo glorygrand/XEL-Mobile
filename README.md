@@ -2,7 +2,7 @@
   <img src="res/android/Xel.png" width="35" title="hover text">
 </p>
 
-### Can contain unknown bugs please wait for stable release . V1.0.2
+### Can contain unknown bugs please wait for stable release . V1.0.3
 
 # XEL Mobile Wallet
 Light weight Mobile application based on Javascript that connects to XEL blockchain. For more info on XEL blockchain visit http://xel.org
@@ -32,7 +32,7 @@ Light weight Mobile application based on Javascript that connects to XEL blockch
 
 ### Signing is done client side before broadcasting transactions.
 
-## Download 
+## Download
 
 https://github.com/tieandsuit/XEL-Mobile/releases
 
@@ -41,4 +41,3 @@ https://github.com/tieandsuit/XEL-Mobile/releases
 https://tieandsuit.github.io/XEL-Mobile/
 
 <img src=https://build.phonegap.com/apps/3576941/badge/643380414/version.svg /> <img src=https://build.phonegap.com/apps/3576941/badge/643380414/android.svg /> <img src=https://build.phonegap.com/apps/3576941/badge/643380414/winphone.svg /> <img src=https://build.phonegap.com/apps/3576941/badge/643380414/ios.svg />
-
