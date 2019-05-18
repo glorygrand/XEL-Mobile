@@ -4,11 +4,15 @@ Light weight Mobile application based on Javascript that connects to XEL blockch
 This application supports following operations.
 
 1. Send Xel to an recipient.
-2. Voting.
-3. Messaging.
-4. Account transactions.
+![send](img\Screenshot_1.png)
+2. Messaging.
+![message](img\Screenshot_2.png)
+3. Account transactions.
+![transaction](img\Screenshot_3.png)
+4. Blockchain service
+![services](img\Screenshot_4.png)
 
-Signing is done client side before broadcasting transactions.
+### Signing is done client side before broadcasting transactions.
 
 ## Download
 
