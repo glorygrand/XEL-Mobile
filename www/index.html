@@ -94,7 +94,7 @@ THE SOFTWARE.
 			}
 			else
 			{
-			   //SkyNxt.discover(); // browser
+			   SkyNxt.discover(); // browser
 			}
 		});
 
@@ -259,7 +259,6 @@ function loaderIconText(msgText) {
 	<button class="button button-block icon ion-share icon-center button-positive" ng-click="sendNxtBtnClick()">
 	  Send XEL
 	</button>
-  </div>
   </div>
   </ion-content>
  </ion-view>
@@ -680,7 +679,7 @@ function loaderIconText(msgText) {
 	</div>
 </ion-content>
 </ion-view>
-</script> !-->
+</script> 
 
 
 <script id="templates/compose.html" type="text/ng-template">
@@ -706,9 +705,8 @@ function loaderIconText(msgText) {
 	<textarea class="text" maxlength="80" style="width:100%;height:100px;" ng-model="message.text" placeholder="Type message"></textarea>
   </div>
   <p></p>
-    <div class="padding">
 	<button class="button button-block icon ion-ios-paperplane-outline icon-center button-positive" ng-click="sendMessage()">
-	  Send Message
+		Send Message
 	</button>
 </ion-content>
 </ion-view>
