@@ -36,8 +36,5 @@ Light weight Mobile application based on Javascript that connects to XEL blockch
 
 https://github.com/tieandsuit/XEL-Mobile/releases
 
-## Run in Browser
-
-https://tieandsuit.github.io/XEL-Mobile/
 
 <img src=https://build.phonegap.com/apps/3576941/badge/643380414/version.svg /> <img src=https://build.phonegap.com/apps/3576941/badge/643380414/android.svg /> <img src=https://build.phonegap.com/apps/3576941/badge/643380414/winphone.svg /> <img src=https://build.phonegap.com/apps/3576941/badge/643380414/ios.svg />
