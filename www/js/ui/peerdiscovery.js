@@ -1,6 +1,7 @@
 // The MIT License (MIT)
 
 // Copyright (c) 2015 SkyNxt.
+// Copyright (c) 2019 XEL Community.
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +22,7 @@
 // THE SOFTWARE.
 
 var SkyNxt = (function(SkyNxt, $, undefined) {
-var peers = ['node-01.xel.org', 'node-02.xel.org', 'node-03.xel.org', 'node-04.xel.org'];
+var peers = ['node-04.xel.org'];
 
 
 
@@ -29,7 +30,7 @@ var peerTraverse = 0;
 var HTTP = "http://";
 var HTTPS = "https://";
 SkyNxt.PORT = "17876";
-var ITR2_PEER_TRAVERSE = 2; //for mobile devices do not try to reach more than this number of peers in second iteration of peer discovery
+var ITR2_PEER_TRAVERSE = 1; //for mobile devices do not try to reach more than this number of peers in second iteration of peer discovery
 var SLEEP_TIME = 5000; //5000 = 5 seconds
 var peersfrmDB = [];
 var apipeersfrmDB = [];

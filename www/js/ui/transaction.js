@@ -24,7 +24,7 @@ var SkyNxt = (function(SkyNxt, $, undefined) {
 
 SkyNxt.TRANSACTION_TYPE = 0;
 SkyNxt.TYPE_MESSAGING = 1;
-SkyNxt.TYPE_COLORED_COINS = 2; 
+SkyNxt.TYPE_COLORED_COINS = 2;
 SkyNxt.SUBTYPE_MESSAGING_ARBITRARY_MESSAGE = 0;
 SkyNxt.SUBTYPE_COLORED_COINS_ASK_ORDER_PLACEMENT = 2;
 SkyNxt.SUBTYPE_COLORED_COINS_BID_ORDER_PLACEMENT = 3;
@@ -124,19 +124,19 @@ SkyNxt.sendNxtAmt_BuildHex = function(amountNQT, recipientID, callbackFunc){
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString([160]));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString([5]));
 	hexTrans = hexTrans.concat(publicKey);
-	
+
 	var nxtAddr = new NxtAddress();
 	nxtAddr.set(recipientID);
-	var recipient = (new BigInteger(nxtAddr.account_id())).toByteArray().reverse();	
-	recipient = recipient.concat(pad( LONG_BYTE_LENGTH - recipient.length, 0 ));	
+	var recipient = (new BigInteger(nxtAddr.account_id())).toByteArray().reverse();
+	recipient = recipient.concat(pad( LONG_BYTE_LENGTH - recipient.length, 0 ));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(recipient.slice(0, LONG_BYTE_LENGTH)));
 
 	var amount = (new BigInteger(amountNQT)).toByteArray().reverse();
 	amount = amount.concat(pad(LONG_BYTE_LENGTH - amount.length, 0));
-	hexTrans = hexTrans.concat(converters.byteArrayToHexString(amount.slice(0, LONG_BYTE_LENGTH)));	
-	
+	hexTrans = hexTrans.concat(converters.byteArrayToHexString(amount.slice(0, LONG_BYTE_LENGTH)));
+
 	var fee = (new BigInteger(SkyNxt.FEE_NQT)).toByteArray().reverse();
-	fee = fee.concat(pad(LONG_BYTE_LENGTH - fee.length, 0));	
+	fee = fee.concat(pad(LONG_BYTE_LENGTH - fee.length, 0));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(fee.slice(0, LONG_BYTE_LENGTH)));
 
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(pad(32,0)));
@@ -152,10 +152,10 @@ SkyNxt.sendNxtAmt_BuildHex = function(amountNQT, recipientID, callbackFunc){
 	signed = signed.concat(signature);
 	signed = signed.concat(buffAfterSignature);
 	var tx = converters.byteArrayToHexString(signed);
-	
+
 	broadcastTransaction(tx, callbackFunc);
 }
-	
+
 SkyNxt.placeAssetOrder_BuildHex = function(type, asset, quantity, price, order, callbackFunc){
     assetID = asset.toString();
 	quantityQNT = quantity.toString();
@@ -165,13 +165,13 @@ SkyNxt.placeAssetOrder_BuildHex = function(type, asset, quantity, price, order, 
 	var LONG_BYTE_LENGTH = 8;
 
 	var amountNQT = 0; var ecBlockHeight = 0; var ecBlockId = 0; var version = 1;
-	
-	var secretPhraseBytes = converters.stringToByteArray(SkyNxt.globalPassPhrase);	
+
+	var secretPhraseBytes = converters.stringToByteArray(SkyNxt.globalPassPhrase);
 	var digest = SkyNxt.simpleHash(secretPhraseBytes);
-	var publicKey = converters.byteArrayToHexString(curve25519.keygen(digest).p);	
+	var publicKey = converters.byteArrayToHexString(curve25519.keygen(digest).p);
 	var timestamp = Math.floor(Date.now() / 1000) - 1385294400;
-	hexTrans = converters.byteArrayToHexString([SkyNxt.TYPE_COLORED_COINS]);	
-	var bitVersion = version << 4;	
+	hexTrans = converters.byteArrayToHexString([SkyNxt.TYPE_COLORED_COINS]);
+	var bitVersion = version << 4;
 	if(type == "buy")
 		 hexTrans = hexTrans.concat(converters.byteArrayToHexString([bitVersion | SkyNxt.SUBTYPE_COLORED_COINS_BID_ORDER_PLACEMENT]));
 	else if(type == "sell")
@@ -180,18 +180,18 @@ SkyNxt.placeAssetOrder_BuildHex = function(type, asset, quantity, price, order, 
 		 hexTrans = hexTrans.concat(converters.byteArrayToHexString([bitVersion | SkyNxt.SUBTYPE_COLORED_COINS_BID_ORDER_CANCELLATION]));
 	else if(type == "sell_cancel")
 		 hexTrans = hexTrans.concat(converters.byteArrayToHexString([bitVersion | SkyNxt.SUBTYPE_COLORED_COINS_ASK_ORDER_CANCELLATION]));
-	 
+
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(converters.int32ToBytes(timestamp)));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString([160]));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString([5]));
 	hexTrans = hexTrans.concat(publicKey);
 	var nxtAddr = new NxtAddress();
-	nxtAddr.set("1739068987193023818"); //creator ID, Genesis account id
+	nxtAddr.set("13769421951337852026"); //creator ID, Genesis account id
 	var creatorID = (new BigInteger(nxtAddr.account_id())).toByteArray().reverse();
-	creatorID = creatorID.concat(pad( LONG_BYTE_LENGTH - creatorID.length, 0 ));	
+	creatorID = creatorID.concat(pad( LONG_BYTE_LENGTH - creatorID.length, 0 ));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(creatorID.slice(0, LONG_BYTE_LENGTH)));
-	var amount = (new BigInteger(String(amountNQT))).toByteArray().reverse();	
-	amount = amount.concat(pad(LONG_BYTE_LENGTH - amount.length, 0));	
+	var amount = (new BigInteger(String(amountNQT))).toByteArray().reverse();
+	amount = amount.concat(pad(LONG_BYTE_LENGTH - amount.length, 0));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(amount.slice(0, LONG_BYTE_LENGTH)));
 	var fee = (new BigInteger(SkyNxt.FEE_NQT)).toByteArray().reverse();
 	fee = fee.concat(pad(LONG_BYTE_LENGTH - fee.length, 0));
@@ -218,9 +218,9 @@ SkyNxt.placeAssetOrder_BuildHex = function(type, asset, quantity, price, order, 
 	{   //cancellation of bid\ask orders with orderID as input
 		var order = (new BigInteger(orderID)).toByteArray().reverse();
 		order = order.concat(pad(LONG_BYTE_LENGTH - order.length, 0));
-		hexTrans = hexTrans.concat(converters.byteArrayToHexString(order.slice(0, LONG_BYTE_LENGTH)));	
+		hexTrans = hexTrans.concat(converters.byteArrayToHexString(order.slice(0, LONG_BYTE_LENGTH)));
 	}
-	
+
 	buffer = converters.hexStringToByteArray(hexTrans);
 	//verifyAndSignTransactionBytes(buffer, "asset");
 	var signature = SkyNxt.signBytes(buffer, SkyNxt.globalPassPhrase);
@@ -234,15 +234,15 @@ SkyNxt.placeAssetOrder_BuildHex = function(type, asset, quantity, price, order, 
 SkyNxt.castVote_BuildHex = function(pollid, vote, callbackFunc){
     pollID = pollid.toString();
 	var buffer = []; var hexTrans;
-	var LONG_BYTE_LENGTH = 8; 
+	var LONG_BYTE_LENGTH = 8;
 
 	var amountNQT = 0; var ecBlockHeight = 0; var ecBlockId = 0; var version = 1;
-	
-	var secretPhraseBytes = converters.stringToByteArray(SkyNxt.globalPassPhrase);	
+
+	var secretPhraseBytes = converters.stringToByteArray(SkyNxt.globalPassPhrase);
 	var digest = SkyNxt.simpleHash(secretPhraseBytes);
-	var publicKey = converters.byteArrayToHexString(curve25519.keygen(digest).p);	
+	var publicKey = converters.byteArrayToHexString(curve25519.keygen(digest).p);
 	var timestamp = Math.floor(Date.now() / 1000) - 1385294400;
-	hexTrans = converters.byteArrayToHexString([SkyNxt.TYPE_MESSAGING]);	
+	hexTrans = converters.byteArrayToHexString([SkyNxt.TYPE_MESSAGING]);
 	var bitVersion = version << 4;
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString([bitVersion | SkyNxt.SUBTYPE_MESSAGING_VOTE_CASTING]));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(converters.int32ToBytes(timestamp)));
@@ -264,7 +264,7 @@ SkyNxt.castVote_BuildHex = function(pollid, vote, callbackFunc){
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(pad(64,0)));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(pad(16,0)));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString([version]));
-	
+
 	var poll = (new BigInteger(pollID)).toByteArray().reverse();
 	poll = poll.concat(pad(LONG_BYTE_LENGTH - poll.length, 0));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(poll.slice(0, LONG_BYTE_LENGTH)));
@@ -275,7 +275,7 @@ SkyNxt.castVote_BuildHex = function(pollid, vote, callbackFunc){
 	{
 		hexTrans = hexTrans.concat(converters.byteArrayToHexString([vote[i]]));
 	}
-	
+
 	buffer = converters.hexStringToByteArray(hexTrans);
 	verifyAndSignTransactionBytes(buffer, "vote");
 	var signature = SkyNxt.signBytes(buffer, SkyNxt.globalPassPhrase);
@@ -289,15 +289,15 @@ SkyNxt.castVote_BuildHex = function(pollid, vote, callbackFunc){
 
 SkyNxt.build = function(type, subType){
 	var buffer = []; var hexTrans;
-	var LONG_BYTE_LENGTH = 8; 
+	var LONG_BYTE_LENGTH = 8;
 
 	var amountNQT = 0; var version = 1;
-	
-	var secretPhraseBytes = converters.stringToByteArray(SkyNxt.globalPassPhrase);	
+
+	var secretPhraseBytes = converters.stringToByteArray(SkyNxt.globalPassPhrase);
 	var digest = SkyNxt.simpleHash(secretPhraseBytes);
-	var publicKey = converters.byteArrayToHexString(curve25519.keygen(digest).p);	
+	var publicKey = converters.byteArrayToHexString(curve25519.keygen(digest).p);
 	var timestamp = Math.floor(Date.now() / 1000) - 1385294400;
-	hexTrans = converters.byteArrayToHexString([type]);	
+	hexTrans = converters.byteArrayToHexString([type]);
 	var bitVersion = version << 4;
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString([bitVersion | subType]));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(converters.int32ToBytes(timestamp)));
@@ -324,15 +324,15 @@ SkyNxt.build = function(type, subType){
 
 SkyNxt.message_BuildHex = function(data, nonce, messageType, recipient, messageFee, callbackFunc){
 	var buffer = []; var hexTrans;
-	var LONG_BYTE_LENGTH = 8; 
+	var LONG_BYTE_LENGTH = 8;
 
 	var amountNQT = 0; var ecBlockHeight = 0; var ecBlockId = 0; var version = 1;
-	
-	var secretPhraseBytes = converters.stringToByteArray(SkyNxt.globalPassPhrase);	
+
+	var secretPhraseBytes = converters.stringToByteArray(SkyNxt.globalPassPhrase);
 	var digest = SkyNxt.simpleHash(secretPhraseBytes);
-	var publicKey = converters.byteArrayToHexString(curve25519.keygen(digest).p);	
-	var timestamp = Math.floor(Date.now() / 1000) - 1385294400; // 86400; //+ 1209600	
-	
+	var publicKey = converters.byteArrayToHexString(curve25519.keygen(digest).p);
+	var timestamp = Math.floor(Date.now() / 1000) - 1385294400; // 86400; //+ 1209600
+
 	hexTrans = converters.byteArrayToHexString([SkyNxt.TYPE_MESSAGING]);
 	var bitVersion = version << 4;
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString([bitVersion | SkyNxt.SUBTYPE_MESSAGING_ARBITRARY_MESSAGE]));
@@ -353,7 +353,7 @@ SkyNxt.message_BuildHex = function(data, nonce, messageType, recipient, messageF
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(fee.slice(0, LONG_BYTE_LENGTH)));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(pad(32,0)));
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(pad(64,0)));
-	
+
 	var flags = 0;
 	var position = 1;
 	if (SkyNxt.MESSAGE == messageType) {
@@ -388,7 +388,7 @@ SkyNxt.message_BuildHex = function(data, nonce, messageType, recipient, messageF
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(converters.int32ToBytes(flags))); //flags
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString(pad(12,0))); //BLOCK HEIGHT 4 + EC BLOCK ID 8 BYTES
 	hexTrans = hexTrans.concat(converters.byteArrayToHexString([version]));
-	
+
 	/*if( messageType == SkyNxt.PRUNABLE_PLAIN_MESSAGE)// || messageType == SkyNxt.PRUNABLE_ENCRYPTED_MESSAGE)
 	{
 		var utf8Bytes = NRS.getUtf8Bytes(data);
@@ -492,7 +492,7 @@ function broadcastTransaction(tx, callbackFunc)
 				}
 			}
 		}).fail(function(xhr, textStatus, error) {
-			
+
 		});
 	}
 }

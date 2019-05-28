@@ -99,15 +99,15 @@ THE SOFTWARE.
 		});
 
 function loaderIcon(showHide) {
-/*SkyNxt.index.run(function($ionicLoading) {
+SkyNxt.index.run(function($ionicLoading) {
 	$ionicLoading.hide();
-	});*/
+	});
 }
 
 function loaderIconText(msgText) {
-	/*SkyNxt.index.run(function($ionicLoading) {
+	SkyNxt.index.run(function($ionicLoading) {
 		$ionicLoading.show({ duration: 30000, noBackdrop: true, template: '<ion-spinner icon="spiral"></ion-spinner>'});
-	});*/
+	});
 }
 </script>
 </head>
@@ -135,12 +135,12 @@ function loaderIconText(msgText) {
 	Input node IP\Port
 </ion-radio>
 <div ng-show="peerInput">
-	<div class="row">
+		<div class="row">
 		<div class="col">
-			<input type="text" ng-model="ip.text" placeholder="IP Address"></input>
+			<input type="text" ng-model="ip.text" placeholder="node-03.xel.org"></input>
 		</div>
 		<div class="col">
-			<input type="text" ng-model="port.text" placeholder="Port"></input>
+			<input type="text" ng-model="port.text" placeholder="17876"></input>
 		</div>
 	</div>
 	<div class="row">
@@ -679,7 +679,7 @@ function loaderIconText(msgText) {
 	</div>
 </ion-content>
 </ion-view>
-</script> 
+</script>
 
 
 <script id="templates/compose.html" type="text/ng-template">
